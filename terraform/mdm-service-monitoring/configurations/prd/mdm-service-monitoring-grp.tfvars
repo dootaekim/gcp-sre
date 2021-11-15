@@ -17,6 +17,6 @@ resource.labels.namespace_name="mdm-app-prd-grp"
 labels.k8s-pod/name="mdm-prd-grp-was"
 textPayload : "POST"
 EOF
-metric_name = "Register_New_BP"
+metric_name = "Fowler_POST_metric_counter"
 label_description = "response code sent to client"
-display_name = "response code sent to client"
+display_name = "Fowler_POST_metric_counter"

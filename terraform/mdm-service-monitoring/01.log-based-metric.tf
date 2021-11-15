@@ -29,24 +29,24 @@ output "post_metric" {
   value = google_logging_metric.logging_metric.name
 }
 
-# resource "google_logging_metric" "logging_metric" {
-#   name   = var.metric_name
-#   filter = var.log_filter
-#   metric_descriptor {
-#     metric_kind = "DELTA"
-#     value_type  = "INT64"
-#     unit        = "1"
-#     labels {
-#       key         = "response_code"
-#       value_type  = "INT64"
-#       description = var.label_description
-#     }
-#     display_name = var.display_name
-#   }
-#   label_extractors = {
-#     "response_code" = "REGEXP_EXTRACT(textPayload, \"HTTP/1.1\\\" ([0-9]+)\")"
-#   }
-# }
+resource "google_logging_metric" "logging_metric_counter" {
+  name   = var.metric_name
+  filter = var.log_filter
+  metric_descriptor {
+    metric_kind = "DELTA"
+    value_type  = "INT64"
+    unit        = "1"
+    labels {
+      key         = "response_code"
+      value_type  = "INT64"
+      description = var.label_description
+    }
+    display_name = var.display_name
+  }
+  label_extractors = {
+    "response_code" = "REGEXP_EXTRACT(textPayload, \"HTTP/1.1\\\" ([0-9]+)\")"
+  }
+}
 
 
 # resource "google_logging_metric" "logging_metric" {
