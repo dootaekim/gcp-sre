@@ -1,0 +1,6 @@
+project_id = "mdm-prod-grp"
+region = "asia-northeast3"
+zone    = "asia-northeast3-a"
+environment = "prd"
+gcs_bucket         = "terraform-state"
+gcs_folder_project = "mdm-prd"
