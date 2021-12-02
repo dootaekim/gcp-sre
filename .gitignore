@@ -30,3 +30,6 @@ override.tf.json
 
 # Backend Files
 **/backend.tf
+
+# command File
+**/command.txt
