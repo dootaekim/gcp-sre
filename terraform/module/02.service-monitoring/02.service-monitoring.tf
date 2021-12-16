@@ -24,16 +24,23 @@ resource "google_monitoring_slo" "request_based_slo_dist" {
   goal = var.goal_dist
   rolling_period_days = 28
 
-  request_based_sli {
-    distribution_cut {
+  windows_based_sli {
+    window_period = "300s"
+    good_total_ratio_threshold {
+      threshold = 0.9
+      performance {
+        distribution_cut {
           distribution_filter = join(" AND ", [
             "metric.type=\"${var.slo_logging_metric_name_dist}\"",
             "resource.type=\"k8s_container\"",
+            "metric.labels.response_code<400",
           ])
           range {
             max = var.range_max
           }
         }
+      }
+    }
   }
 }
 
@@ -44,17 +51,25 @@ resource "google_monitoring_slo" "request_based_slo_counter" {
 
   goal = var.goal_counter
   rolling_period_days = 28
-  request_based_sli {
-    good_total_ratio {
-      good_service_filter = join(" AND ", [
+
+   windows_based_sli {
+    window_period = "300s"
+    good_total_ratio_threshold {
+      threshold = 0.9
+      performance {
+        good_total_ratio {
+          good_service_filter = join(" AND ", [
           "metric.type=\"${var.slo_logging_metric_name_counter}\"",
           "resource.type=\"k8s_container\"",
-          "metric.label.response_code!=monitoring.regex.full_match(\"([4|5][0-9]+)\")",
-      ])
-      total_service_filter = join(" AND ", [
-        "metric.type=\"${var.slo_logging_metric_name_counter}\"",
-        "resource.type=\"k8s_container\"",
-      ])
+          "metric.label.response_code<400",
+          # "metric.label.response_code!=monitoring.regex.full_match(\"([4|5][0-9]+)\")",
+        ])
+          total_service_filter = join(" AND ", [
+          "metric.type=\"${var.slo_logging_metric_name_counter}\"",
+          "resource.type=\"k8s_container\"",
+        ])
+        }
+      }
     }
   }
 }

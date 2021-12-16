@@ -7,7 +7,7 @@ resource "google_logging_metric" "logging_metric_dist" {
     unit    = "1"
     labels {
       key    = "response_code"
-      value_type = "STRING"
+      value_type = "INT64"
       description = "response code sent to client"
     }
     display_name = var.metric_display_name_dist
@@ -34,7 +34,7 @@ resource "google_logging_metric" "logging_metric_counter" {
     unit        = "1"
     labels {
       key         = "response_code"
-      value_type  = "STRING"
+      value_type  = "INT64"
       description = "response code sent to client"
     }
     display_name = var.metric_display_name_counter
